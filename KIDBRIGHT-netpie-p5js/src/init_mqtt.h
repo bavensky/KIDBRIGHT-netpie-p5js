@@ -32,10 +32,10 @@ Serial.println("[2]");
   });
 
   mqtt->on_prepare_configuration([&](MqttConnector::Config *config) -> void {
-    MQTT_CLIENT_ID = String(WiFi.macAddress());
+   // MQTT_CLIENT_ID = String(WiFi.macAddress());
     config->clientId  = MQTT_CLIENT_ID;
     config->channelPrefix = MQTT_PREFIX;
-    config->enableLastWill = true;
+    config->enableLastWill = false;
     config->retainPublishMessage = false;
     /*
         config->mode
@@ -45,7 +45,7 @@ Serial.println("[2]");
         | MODE_SUB_ONLY   |
         ===================
     */
-    config->mode = MODE_BOTH;
+    config->mode = MODE_SUB_ONLY;
     config->firstCapChannel = false;
 
     config->username = String(MQTT_USERNAME);

@@ -1,32 +1,35 @@
 #include <Arduino.h>
 #include <Arduino.h>
 
-#ifdef ESP8266 
-  #include <ESP8266WiFi.h>
-#else 
-  #include <WiFi.h>
+#ifdef ESP8266
+#include <ESP8266WiFi.h>
+#else
+#include <WiFi.h>
 #endif
 
 #include <ArduinoJson.h>
 #include <MqttConnector.h>
 #include <Wire.h>
 #include <SPI.h>
+#include "ht16k33.h"
 
 #include "init_mqtt.h"
 #include "_publish.h"
 #include "_receive.h"
 #include "_config.h"
 
-#define S1  16
-#define S2  14
+#define S1 16
+#define S2 14
 
-MqttConnector *mqtt; 
+HT16K33 HT;
+MqttConnector *mqtt;
 
-int relayPin = 26; 
+int relayPin = 26;
 int relayPinState = HIGH;
 char myName[40];
 int x, y;
 uint32_t btCount = 0;
+uint8_t led;
 
 void init_hardware()
 {
@@ -36,24 +39,44 @@ void init_hardware()
   pinMode(S1, INPUT_PULLUP);
   pinMode(S2, INPUT_PULLUP);
 
-  digitalWrite(relayPin, relayPinState);;
+  digitalWrite(relayPin, relayPinState);
+  ;
   // serial port initialization
   Serial.begin(115200);
   delay(10);
   Serial.println();
   Serial.println("Starting...");
+
+  HT.begin(0x00);
+  // flash the LEDs, first turn them on
+  Serial.println(F("Turn on all LEDs"));
+  for (led = 0; led < 128; led++)
+  {
+    HT.setLedNow(led);
+    delay(10);
+  } // for led
+
+  //Next clear them
+  Serial.println(F("Clear all LEDs"));
+  for (led = 0; led < 128; led++)
+  {
+    HT.clearLedNow(led);
+    delay(10);
+  } // for led
 }
 
-void init_wifi() {
+void init_wifi()
+{
   WiFi.disconnect();
   delay(20);
   WiFi.mode(WIFI_STA);
   delay(50);
-  const char* ssid =  WIFI_SSID.c_str();
-  const char* pass =  WIFI_PASSWORD.c_str();
+  const char *ssid = WIFI_SSID.c_str();
+  const char *pass = WIFI_PASSWORD.c_str();
   WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.printf ("Connecting to %s:%s\r\n", ssid, pass);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.printf("Connecting to %s:%s\r\n", ssid, pass);
     delay(300);
   }
   Serial.println("WiFi Connected.");
@@ -69,11 +92,13 @@ void setup()
 
 void loop()
 {
-  if(digitalRead(S1) == 0) {
+  if (digitalRead(S1) == 0)
+  {
     delay(200);
     btCount += 1;
+    Serial.println(btCount);
     //    sync_advpub("prefix", "topic", "payload", "retain")
-    mqtt->sync_advpub("", "/nstda/gearname/kidbright", String(btCount), false);
+    mqtt->sync_advpub("", "/KIDBRIGHT/gearname/kb", String(btCount), false);
   }
   mqtt->loop();
 }
