@@ -72,6 +72,8 @@ void loop()
   if(digitalRead(S1) == 0) {
     delay(200);
     btCount += 1;
+    //    sync_advpub("prefix", "topic", "payload", "retain")
+    mqtt->sync_advpub("", "/nstda/gearname/kidbright", String(btCount), false);
   }
   mqtt->loop();
 }
