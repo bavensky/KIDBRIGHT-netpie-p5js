@@ -29,7 +29,7 @@ int relayPinState = HIGH;
 char myName[40];
 int x, y;
 uint32_t btCount = 0;
-uint8_t led;
+uint8_t led = 0;
 
 void init_hardware()
 {
@@ -63,6 +63,7 @@ void init_hardware()
     HT.clearLedNow(led);
     delay(10);
   } // for led
+  
 }
 
 void init_wifi()
@@ -98,7 +99,7 @@ void loop()
     btCount += 1;
     Serial.println(btCount);
     //    sync_advpub("prefix", "topic", "payload", "retain")
-    mqtt->sync_advpub("", "/KIDBRIGHT/gearname/kb", String(btCount), false);
+    mqtt->sync_advpub("", "/KIDBRIGHT/gearname/KB001", String(btCount), false);
   }
   mqtt->loop();
 }

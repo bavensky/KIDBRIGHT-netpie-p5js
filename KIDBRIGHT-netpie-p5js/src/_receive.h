@@ -10,6 +10,9 @@ extern int relayPin;
 extern int relayPinState;
 extern char myName[];
 
+extern HT16K33 HT;
+extern uint8_t led;
+
 
 void register_receive_hooks() {
   mqtt->on_subscribe([&](MQTT::Subscribe *sub) -> void {
@@ -28,9 +31,13 @@ void register_receive_hooks() {
     Serial.printf("payload: %s\r\n", payload.c_str());
     if (cmd == "$/command") {
       if (payload == "ON") {
+        led++;
+        HT.setLedNow(led);
         digitalWrite(relayPin, HIGH);
         digitalWrite(LED_BUILTIN, LOW);
         relayPinState = HIGH;
+        Serial.print("led = ");
+        Serial.println(led);
       }
       else if (payload == "OFF") {
         digitalWrite(relayPin, LOW);
