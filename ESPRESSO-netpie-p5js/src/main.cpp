@@ -84,7 +84,7 @@ void loop()
     // btCount += 1;
     // Serial.println(btCount);
     //    sync_advpub("prefix", "topic", "payload", "retain")
-    mqtt->sync_advpub("","/devSuperman/gearname/espRobot", String("ON-ESP"), false);
+    mqtt->sync_advpub("","/devSuperman/gearname/espRobot", String(10), false);
   }
   mqtt->loop();
 }
