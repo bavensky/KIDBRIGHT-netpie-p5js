@@ -9,10 +9,10 @@ String WIFI_PASSWORD    = "espertap";
 
 /* MQTT INFO */ 
 String MQTT_HOST        = "gb.netpie.io";
-String MQTT_USERNAME    = "j4RZnUdLQLEZOqR";
-String MQTT_PASSWORD    = "Ztt2Ec8TLm6EXGQyWnRkv2aueLE=";
-String MQTT_CLIENT_ID   = "su0QpRQr07EPm9oi";
-String MQTT_PREFIX      = "/KIDBRIGHT/gearname/";
+String MQTT_USERNAME    = "CfiQvoEctV9uk92";
+String MQTT_PASSWORD    = "YHMys6WMI8lsksN5eBT1vxMnQFs=";
+String MQTT_CLIENT_ID   = "BwLyt0Qs33aaTQle";
+String MQTT_PREFIX      = "/devSuperman/gearname/";
 int    MQTT_PORT        = 1883;
 int PUBLISH_EVERY       = 5L * 1000;
 int MQTT_CONNECT_TIMEOUT= 120; 
@@ -20,9 +20,5 @@ int MQTT_CONNECT_TIMEOUT= 120;
 
 /*
 * board
-*   mosquitto_sub -t "/KIDBRIGHT/gearname/#" -h gb.netpie.io -i su0QpRQr07EPm9oi -u "j4RZnUdLQLEZOqR" -P "Ztt2Ec8TLm6EXGQyWnRkv2aueLE=" -p 1883 -d
-* subscribe
-*   mosquitto_sub -t "/KIDBRIGHT/gearname/#" -h gb.netpie.io -i eWkn1mOvYkF8Ch45 -u "G6IXOuls4EtZcBI" -P "gXHzHsfnsUFvfx598jUm49utfqY=" -p 1883 -d
-* web
-*   mosquitto_sub -t "/KIDBRIGHT/gearname/#" -h gb.netpie.io -i PojWnKM8EBWV6XbC -u "G6IXOuls4EtZcBI" -P "Sij29iKaTU3sDM9k+25vreNkw5w=" -p 1883 -d
+*   mosquitto_sub -t "/devSuperman/gearname/#" -h gb.netpie.io -i BwLyt0Qs33aaTQle -u "CfiQvoEctV9uk92" -P "YHMys6WMI8lsksN5eBT1vxMnQFs=" -p 1883 -d
 */

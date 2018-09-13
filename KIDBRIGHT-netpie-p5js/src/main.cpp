@@ -18,8 +18,8 @@
 #include "_receive.h"
 #include "_config.h"
 
-#define S1 16
-#define S2 14
+#define rxPin (16)
+#define txPin (17)
 
 HT16K33 HT;
 MqttConnector *mqtt;
@@ -29,40 +29,38 @@ int relayPinState = HIGH;
 char myName[40];
 int x, y;
 uint32_t btCount = 0;
-uint8_t led = 0;
+uint32_t direction = 50;
 
 void init_hardware()
 {
   pinMode(relayPin, OUTPUT);
   pinMode(2, OUTPUT);
 
-  pinMode(S1, INPUT_PULLUP);
-  pinMode(S2, INPUT_PULLUP);
-
   digitalWrite(relayPin, relayPinState);
-  ;
+
   // serial port initialization
   Serial.begin(115200);
+  Serial1.begin(9600, SERIAL_8N1, rxPin, txPin, false);
   delay(10);
   Serial.println();
   Serial.println("Starting...");
 
-  HT.begin(0x00);
-  // flash the LEDs, first turn them on
-  Serial.println(F("Turn on all LEDs"));
-  for (led = 0; led < 128; led++)
-  {
-    HT.setLedNow(led);
-    delay(10);
-  } // for led
+  // HT.begin(0x00);
+  // // flash the LEDs, first turn them on
+  // Serial.println(F("Turn on all LEDs"));
+  // for (led = 0; led < 128; led++)
+  // {
+  //   HT.setLedNow(led);
+  //   delay(10);
+  // } // for led
 
-  //Next clear them
-  Serial.println(F("Clear all LEDs"));
-  for (led = 0; led < 128; led++)
-  {
-    HT.clearLedNow(led);
-    delay(10);
-  } // for led
+  // //Next clear them
+  // Serial.println(F("Clear all LEDs"));
+  // for (led = 0; led < 128; led++)
+  // {
+  //   HT.clearLedNow(led);
+  //   delay(10);
+  // } // for led
   
 }
 

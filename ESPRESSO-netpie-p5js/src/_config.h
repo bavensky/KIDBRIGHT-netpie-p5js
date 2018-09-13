@@ -1,7 +1,7 @@
 #include <Arduino.h> 
 
 /* BOARD INFO */
-String DEVICE_NAME      = "espRobot"; 
+String DEVICE_NAME      = "KB001"; 
 
 /* WIFI INFO */ 
 String WIFI_SSID        = "ampere";
