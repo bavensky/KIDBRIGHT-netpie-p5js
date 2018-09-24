@@ -472,47 +472,47 @@ uint8_t BL_eye[] =
 
 void init_hardware()
 {
-  pinMode(relayPin, OUTPUT);
-  pinMode(2, OUTPUT);
-  pinMode(S1, INPUT_PULLUP);
-  pinMode(S2, INPUT_PULLUP);
+    pinMode(relayPin, OUTPUT);
+    pinMode(2, OUTPUT);
+    pinMode(S1, INPUT_PULLUP);
+    pinMode(S2, INPUT_PULLUP);
 
-  digitalWrite(relayPin, relayPinState);
+    digitalWrite(relayPin, relayPinState);
 
-  // serial port initialization
-  Serial.begin(115200);
-  // Serial1.begin(9600, SERIAL_8N1, rxPin, txPin, false);
-  delay(10);
-  Serial.println();
-  Serial.println("Starting...");
+    // serial port initialization
+    Serial.begin(115200);
+    // Serial1.begin(9600, SERIAL_8N1, rxPin, txPin, false);
+    delay(10);
+    Serial.println();
+    Serial.println("Starting...");
 
-  matrix.begin(0x70);
-  matrix.setRotation(2);
+    matrix.begin(0x70);
+    matrix.setRotation(2);
 }
 
 void init_wifi()
 {
-  WiFi.disconnect();
-  delay(20);
-  WiFi.mode(WIFI_STA);
-  delay(50);
-  const char *ssid = WIFI_SSID.c_str();
-  const char *pass = WIFI_PASSWORD.c_str();
-  WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.printf("Connecting to %s:%s\r\n", ssid, pass);
-    delay(300);
-  }
-  Serial.println("WiFi Connected.");
-  digitalWrite(2, HIGH);
+    WiFi.disconnect();
+    delay(20);
+    WiFi.mode(WIFI_STA);
+    delay(50);
+    const char *ssid = WIFI_SSID.c_str();
+    const char *pass = WIFI_PASSWORD.c_str();
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        Serial.printf("Connecting to %s:%s\r\n", ssid, pass);
+        delay(300);
+    }
+    Serial.println("WiFi Connected.");
+    digitalWrite(2, HIGH);
 }
 
 void stopBlinkEye()
 {
-  matrix.drawBitmap(0, 8, eye_1l, 8, 8, LED_ON);
-  matrix.drawBitmap(0, 0, eye_1r, 8, 8, LED_ON);
-  matrix.writeDisplay();
+    matrix.drawBitmap(0, 8, eye_1l, 8, 8, LED_ON);
+    matrix.drawBitmap(0, 0, eye_1r, 8, 8, LED_ON);
+    matrix.writeDisplay();
 }
 
 uint32_t curTime = 0;
@@ -520,82 +520,82 @@ int wink_eye = 0;
 
 void blinkEye()
 {
-  // Serial.print("time loop = ");
-  // Serial.println((millis() - curTime));
-  // curTime = millis();
+    // Serial.print("time loop = ");
+    // Serial.println((millis() - curTime));
+    // curTime = millis();
 
-  timenow = millis();
-  if (timenow - time1 >= 50)
-  {
-    matrix.clear();
-    time1 = timenow;
-
-    wink_eye++;
-    switch (wink_eye)
+    timenow = millis();
+    if (timenow - time1 >= 50)
     {
-    case 1: // forward
-      matrix.drawBitmap(0, 8, R_eye11, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye11, 8, 8, LED_ON);
-      break;
-    case 2: // backward
-      matrix.drawBitmap(0, 8, R_eye22, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye22, 8, 8, LED_ON);
-      break;
-    case 3: // left
-      matrix.drawBitmap(0, 8, R_eye33, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye33, 8, 8, LED_ON);
-      break;
-    case 4: // right
-      matrix.drawBitmap(0, 8, R_eye44, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye44, 8, 8, LED_ON);
-      break;
-    case 5: // wink
-      matrix.drawBitmap(0, 8, R_eye55, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye55, 8, 8, LED_ON);
-      break;
-    case 6: // forward
-      matrix.drawBitmap(0, 8, R_eye66, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye66, 8, 8, LED_ON);
-      break;
-    case 7: // backward
-      matrix.drawBitmap(0, 8, R_eye77, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye77, 8, 8, LED_ON);
-      break;
-    case 8: // left
-      matrix.drawBitmap(0, 8, R_eye88, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye88, 8, 8, LED_ON);
-      break;
-    case 9: // right
-      matrix.drawBitmap(0, 8, R_eye99, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye99, 8, 8, LED_ON);
-      break;
-    case 10: // wink
-      matrix.drawBitmap(0, 8, R_eye111, 8, 8, LED_ON);
-      matrix.drawBitmap(0, 0, L_eye111, 8, 8, LED_ON);
-      break;
-    default:
-      wink_eye = 0;
-      statusDisplay = false;
-      break;
-    }
-    matrix.writeDisplay();
-  }
+        matrix.clear();
+        time1 = timenow;
 
-  if (wink_eye > 10)
-  {
-    wink_eye = 0;
-    statusDisplay = false;
-    matrix.clear();
-    stopBlinkEye();
-    // delay(1000);
-  }
+        wink_eye++;
+        switch (wink_eye)
+        {
+        case 1: // forward
+            matrix.drawBitmap(0, 8, R_eye11, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye11, 8, 8, LED_ON);
+            break;
+        case 2: // backward
+            matrix.drawBitmap(0, 8, R_eye22, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye22, 8, 8, LED_ON);
+            break;
+        case 3: // left
+            matrix.drawBitmap(0, 8, R_eye33, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye33, 8, 8, LED_ON);
+            break;
+        case 4: // right
+            matrix.drawBitmap(0, 8, R_eye44, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye44, 8, 8, LED_ON);
+            break;
+        case 5: // wink
+            matrix.drawBitmap(0, 8, R_eye55, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye55, 8, 8, LED_ON);
+            break;
+        case 6: // forward
+            matrix.drawBitmap(0, 8, R_eye66, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye66, 8, 8, LED_ON);
+            break;
+        case 7: // backward
+            matrix.drawBitmap(0, 8, R_eye77, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye77, 8, 8, LED_ON);
+            break;
+        case 8: // left
+            matrix.drawBitmap(0, 8, R_eye88, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye88, 8, 8, LED_ON);
+            break;
+        case 9: // right
+            matrix.drawBitmap(0, 8, R_eye99, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye99, 8, 8, LED_ON);
+            break;
+        case 10: // wink
+            matrix.drawBitmap(0, 8, R_eye111, 8, 8, LED_ON);
+            matrix.drawBitmap(0, 0, L_eye111, 8, 8, LED_ON);
+            break;
+        default:
+            wink_eye = 0;
+            statusDisplay = false;
+            break;
+        }
+        matrix.writeDisplay();
+    }
+
+    if (wink_eye > 10)
+    {
+        wink_eye = 0;
+        statusDisplay = false;
+        matrix.clear();
+        stopBlinkEye();
+        // delay(1000);
+    }
 }
 
 void setup()
 {
-  init_hardware();
-  init_wifi();
-  init_mqtt();
+    init_hardware();
+    init_wifi();
+    init_mqtt();
 }
 
 //   //    sync_advpub("prefix", "topic", "payload", "retain")
@@ -603,14 +603,14 @@ void setup()
 unsigned long previousMillis = 0;
 void loop()
 {
-  if (statusDisplay == false)
-  {
-    stopBlinkEye();
-  }
-  if (statusDisplay == true)
-  {
-    blinkEye();
-  }
+    if (statusDisplay == false)
+    {
+        stopBlinkEye();
+    }
+    if (statusDisplay == true)
+    {
+        blinkEye();
+    }
 
-  mqtt->loop();
+    mqtt->loop();
 } // END LOOP
